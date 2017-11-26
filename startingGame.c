@@ -73,5 +73,5 @@ void setElement(MAP *M, POINT index, char type,int owner){
 }
 
 void input_command(char *command){
-	printf("Input your command : "); scanf("%s",command);
+	printf("Input your command : "); scanf("%s",command); printf("\n");
 }

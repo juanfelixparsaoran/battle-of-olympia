@@ -38,14 +38,16 @@ int main(){
       M = Init_map();
       setStartGame(&M, &P1, &P2);
       printMap(M);
-	  Print_Player_Info(P1,M);
-	  input_command(&command);
-	  if (strcmp(command,"attack") == 0){
-		  attack(&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),&M,&units(P1), &units(P2));
-	  }else if (strcmp(command,"recruit") == 0){
-		  BacaPOINT(&recruit);
-		  printf("Pilih yang mau direkruit\n"); scanf("%d",&type);
-		  Recruit(&P1,type, &M, recruit);
+	  while(!UnitList_empty(units(P1)) || !UnitList_empty(units(P1))){
+		  Print_Player_Info(P1,M);
+		  input_command(&command);
+		  if (strcmp(command,"attack") == 0){
+			  attack(&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),&M,&units(P1), &units(P2),&Can_Atk(Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1))))));
+		  }else if (strcmp(command,"recruit") == 0){
+			  Recruit(&P1,&type, &M, &recruit,Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))));
+		  }else if(strcmp(command,"map") ==0 ){
+			  printMap(M);
+		  }
 	  }
       break;
     case 2:
