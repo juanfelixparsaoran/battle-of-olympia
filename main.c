@@ -40,12 +40,15 @@ int main(){
       M = Init_map();
       setStartGame(&M, &P1, &P2);
       printMap(M);
-	  POINT info,recruit,move;
+	  POINT info,recruit,move,RajaP1,RajaP2;
 	  CreateEmpty1(&Qturn,2);
-	  UnitList VillageP1,VillageP2;
 	  Add(&Qturn,1);
 	  Add(&Qturn,2);
-	  while(!UnitList_empty(units(P1)) || !UnitList_empty(units(P2))){
+	 
+	  RajaP1 = get_unit_position(units(P1),1);
+	  RajaP2 = get_unit_position(units(P2),1);
+	  printf("%d\n",Hp(Unit(M,Absis(RajaP1),Ordinat(RajaP1))));
+	  while(Hp(Unit(M,Absis(RajaP1),Ordinat(RajaP1))) > 0 && Hp(Unit(M,Absis(RajaP1),Ordinat(RajaP1))) > 0){
 		  if(InfoHead(Qturn)==1){
 			  Print_Player_Info(P1,M);
 			  input_command(&command);
@@ -95,6 +98,13 @@ int main(){
 				  }
 			  }
 		  }
+	  }
+		if (Hp(Unit(M,Absis(RajaP1),Ordinat(RajaP1)))<=0){
+		  printf("Player 1 Win, Congrats!!\n");
+		  break;
+		}else{
+		printf("Player 2 Win, Congrats!!\n");
+		break;
 		}
       break;
     case 2:
