@@ -10,6 +10,7 @@
 #include "villages.h"
 #include "startingGame.h"
 #include "command.h"
+#include "queue.h"
 #include <string.h>
 
 #define NEWLINE printf("\n" );
@@ -21,6 +22,7 @@ int main(){
   int type;
   char command[10];
   POINT recruit;
+  Queue Qturn;
 
   Player P1 = create_new_player(1);
   Player P2 = create_new_player(2);
@@ -38,6 +40,9 @@ int main(){
       M = Init_map();
       setStartGame(&M, &P1, &P2);
       printMap(M);
+	  CreateEmpty(&Qturn,2);
+	  Add(&Qturn,1);
+	  Add(&Qturn,2);
 	  while(!UnitList_empty(units(P1)) || !UnitList_empty(units(P1))){
 		  Print_Player_Info(P1,M);
 		  input_command(&command);
@@ -47,7 +52,10 @@ int main(){
 			  Recruit(&P1,&type, &M, &recruit,Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))));
 		  }else if(strcmp(command,"map") ==0 ){
 			  printMap(M);
-		  }
+		  }else if(strcmp(command,"change_unit") == 0){
+			  CHANGE_UNIT(M,Qturn,units(P1),units(P2),&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))));
+		  }			  
+			  
 	  }
       break;
     case 2:

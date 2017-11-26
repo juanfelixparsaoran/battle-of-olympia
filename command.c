@@ -111,6 +111,103 @@ void Recruit(Player *P,int *type, MAP *M, POINT *Point,UNIT U){
 		printf("current unit is not a king or your king position is not in tower\n\n");
 	}
 }
+
+void CHANGE_UNIT (MAP M,Queue QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT *Current_unit) {
+    int x;
+    if (InfoHead(QTURN)==1){
+        printf("Unit List of Player 1 :\n");
+        Display_unit_list (M, ListUnitP1);
+        printf("Please enter the no. Unit: \n");
+        scanf("%d",&x);
+        select_unit(M,ListUnitP1,Current_unit,x);
+    }
+    else {
+        printf("Unit List of Player 2 :\n");
+        Display_unit_list (M, ListUnitP2);
+        printf("Please enter the no. Unit: \n");
+        scanf("%d",&x);
+        select_unit(M,ListUnitP2,Current_unit,x);
+	}
+}
+
+void END_TURN(MAP M,Queue *QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT *Current_UNIT){
+        int x,i;
+        if (InfoHead(*QTURN)==1){
+        for (i=1;i<=UnitNbElmt(ListUnitP1);i++){
+            select_unit(M,ListUnitP1,Current_UNIT,i);
+            Mov(*Current_UNIT) = M_Mov(*Current_UNIT);
+            Can_Atk(*Current_UNIT)		= true;
+        }
+        }
+        else{
+            for (i=1;i<=UnitNbElmt(ListUnitP2);i++){
+            select_unit(M,ListUnitP2,Current_UNIT,i);
+            Mov(*Current_UNIT) = M_Mov(*Current_UNIT);
+            Can_Atk(*Current_UNIT)		= true;
+        }
+        Del(QTURN,&x);
+        Add(QTURN,x);
+	}
+}
+
+void INFO (MAP M,int i,int j){
+    printf("== Cell Info ==\n");
+    if(VillageType(Village(M, i, j)) == Nil){
+        printf("Normal\n");
+    }
+    else if(VillageType(Village(M, i, j)) == 'T'){
+        printf("Tower\n");
+        printf("Owned by Player %d\n",VillageOwner(Village(M, i, j)));
+    }
+    else if (VillageType(Village(M, i, j)) == 'C'){
+        printf("Castle\n");
+        printf("Owned by Player %d\n",VillageOwner(Village(M, i, j)));
+    }
+    else if (VillageType(Village(M, i, j)) == 'V'){
+        printf("Village\n");
+        if(VillageOwner(Village(M, i, j))==1){
+        printf("Owned by Player 1\n");
+        }
+        else if(VillageOwner(Village(M, i, j))==2){
+        printf("Owned by Player 2\n");
+        }
+        else {
+        printf("Not Owned by both Player\n");
+        }
+    }
+    printf("\n");
+    printf("== Unit Info ==\n");
+    if (Type(Unit(M, i, j)) == Nil){
+        printf("No Unit");
+    }
+    else if (Type(Unit(M, i, j)) == 'K'){
+        printf("King\n");
+        if (Owner(Unit(M,i,j))==1){
+          printf("Owned by Player 1\n");
+        }
+        else if (Owner(Unit(M,i,j))==2){
+          printf("Owned by Player 2\n");
+        }
+    }
+    else if (Type(Unit(M, i, j)) == 'A'){
+        printf("Archer\n");
+        if (Owner(Unit(M,i,j))==1){
+          printf("Owned by Player 1\n");
+        }
+        else if (Owner(Unit(M,i,j))==2){
+          printf("Owned by Player 2\n");
+        }
+    }
+    else if (Type(Unit(M, i, j)) == 'S'){
+        printf("Swordsman\n");
+        if (Owner(Unit(M,i,j))==1){
+          printf("Owned by Player 1\n");
+        }
+        else if (Owner(Unit(M,i,j))==2){
+          printf("Owned by Player 2\n");
+        }
+    }
+}
 		
 				
 		
