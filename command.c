@@ -16,7 +16,7 @@ void Display_enemy_nearby(UNIT Current_Unit,MAP M, UnitList P1, UnitList P2,bool
 				sum += 1;
 				printf("%d. ",sum);
 				show_unit_in_list(Unit(M, Absis(P), Ordinat(P)));
-				*Enemy_Nearby = Insert_unit(*Enemy_Nearby,P,sum-1);	
+				*Enemy_Nearby = Insert_unit(*Enemy_Nearby,P,sum-1);
 			}
 		}
 		if (sum==0){
@@ -54,11 +54,11 @@ void attack(UNIT *Current_Unit,MAP *M,UnitList *P1, UnitList *P2, boolean *can_a
 				address P = Enemy_Nearby;
 				while(P != NULL){
 					if(Index(P) == pilihserang){
-						if(Atk_Type(*Current_Unit) == Atk_Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) || 
+						if(Atk_Type(*Current_Unit) == Atk_Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) ||
 						Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) != 'K'){ /*retaliates*/
 							Hp(*Current_Unit) -= Atk(Unit(*M,Absis(Info(P)),Ordinat(Info(P))));
 							Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) -= Atk(*Current_Unit);
-						}else if((Atk_Type(*Current_Unit) != Atk_Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P))))) || 
+						}else if((Atk_Type(*Current_Unit) != Atk_Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P))))) ||
 						(Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P))))-Atk(*Current_Unit) == 0)){
 							Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) -= Atk(*Current_Unit);
 						}
@@ -83,7 +83,7 @@ void attack(UNIT *Current_Unit,MAP *M,UnitList *P1, UnitList *P2, boolean *can_a
 	}else{
 		printf("this unit cant attack in this turn\n\n");
 	}
-			
+
 }
 
 
@@ -108,7 +108,7 @@ void Recruit(Player *P,int *type, MAP *M, POINT *Point,UNIT U){
 			}else{
 				printf("wrong input");
 			}
-			
+
 			if (gold(*P) >= Cost){
 				if (*type==1){
 					Unit(*M, x, y) = Create_new_unit('A', ID(*P), x ,y);
@@ -120,7 +120,7 @@ void Recruit(Player *P,int *type, MAP *M, POINT *Point,UNIT U){
 					printf("wrong input");
 				}
 				gold(*P) -= Cost;
-				
+
 			}else{
 				printf("Not enough money :(..\n\n");
 			}
@@ -151,19 +151,19 @@ void CHANGE_UNIT (MAP M,Queue QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT
 void END_TURN(MAP M,Queue *QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT *Current_UNIT){
         int x,i;
         if (InfoHead(*QTURN)==1){
-			for (i=1;i<=UnitNbElmt(ListUnitP1);i++){
-				Mov(*Current_UNIT) = M_Mov(*Current_UNIT);
-				Can_Atk(*Current_UNIT)		= true;
-			}
+					for (i=1;i<=UnitNbElmt(ListUnitP1);i++){
+						Mov(*Current_UNIT) = M_Mov(*Current_UNIT);
+						Can_Atk(*Current_UNIT)		= true;
+					}
         }
         else{
             for (i=1;i<=UnitNbElmt(ListUnitP2);i++){
             Mov(*Current_UNIT) = M_Mov(*Current_UNIT);
             Can_Atk(*Current_UNIT)		= true;
         }
-        Del(QTURN,&x);
-		Add(QTURN,2);
-	}
+			  }
+				Del(QTURN,&x);
+				Add(QTURN,x);
 }
 
 void INFO (MAP M,int i,int j){
@@ -223,17 +223,5 @@ void INFO (MAP M,int i,int j){
           printf("Owned by Player 2\n");
         }
     }
-	
+
 }
-		
-				
-		
-		
-		
-		
-		
-	
-	
-	
-					
-		
