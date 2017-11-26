@@ -52,20 +52,13 @@ void Move(MAP *M , UNIT *U , POINT P, Player *Play){
 	/*Kamus*/
 	/*Algoritma*/
 	if(MovementsRemain(*U)>0){
-			if(!IsSquareEmpty(*M,P) || !IsSquareAdjacent(*U,P)){
-				do{
-					printf("You can't move there\n");
-					ReadMoveValue(&P);
-					if(IsSquareEmpty(*M,P) && IsSquareAdjacent(*U,P)){
-						ChangeUnitPos(U,P,M,Play);
-						printf("You have succesfully moved to"); TulisPOINT(P);
-					}
-				}while(!IsSquareEmpty(*M,P) || !IsSquareAdjacent(*U,P));
-			}else{
+			do{
+				printf("You can't move there, please enter valid coordinate\n");
+				ReadMoveValue(&P);
+			}while(!IsSquareEmpty(*M,P) || !IsSquareAdjacent(*U,P));
 				ChangeUnitPos(U,P,M,Play);
-				printf("You have succesfully moved to"); TulisPOINT(P);
+				printf("You have succesfully moved to"); TulisPOINT(P); printf("\n");
 
-			}
 	}else{
 		printf("You can't move again. Your movement point is not enough\n");
 	}

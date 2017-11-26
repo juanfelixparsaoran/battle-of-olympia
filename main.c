@@ -42,6 +42,7 @@ int main(){
       printMap(M);
 	  POINT info,recruit,move;
 	  CreateEmpty1(&Qturn,2);
+	  UnitList VillageP1,VillageP2;
 	  Add(&Qturn,1);
 	  Add(&Qturn,2);
 	  while(!UnitList_empty(units(P1)) || !UnitList_empty(units(P2))){
@@ -62,8 +63,12 @@ int main(){
 				  printf("Masukkan koordinat map : "); BacaPOINT(&info);
 				  INFO(M,Absis(info),Ordinat(info));
 			  }else if(strcmp(command,"move") == 0){
-				  BacaPOINT(&move);
+				  printf("Masukkan koordinat tujuan : "); BacaPOINT(&move);
 				  Move(&M ,&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),move,&P1);
+				  if(VillageType(Village(M,Absis(Info(units(P1))),Ordinat(Info(units(P1))))) == 'V'){
+					  printf("You captured a village");
+					  VillageOwner(Village(M,Absis(Info(units(P1))),Ordinat(Info(units(P1))))) = '1';
+				  }
 			  }
 		  }else{
 			  Print_Player_Info(P2,M);
@@ -82,7 +87,12 @@ int main(){
 				  printf("Masukkan koordinat map : "); BacaPOINT(&info);
 				  INFO(M,Absis(info),Ordinat(info));
 			  }else if(strcmp(command,"move") == 0){
+				  printf("Masukkan koordinat tujuan : ");  BacaPOINT(&move);
 				  Move(&M , &Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2)))) ,move, &P2);
+				  if(VillageType(Village(M,Absis(Info(units(P2))),Ordinat(Info(units(P2))))) == 'V'){
+					  printf("You captured a village\n");
+					  VillageOwner(Village(M,Absis(Info(units(P2))),Ordinat(Info(units(P2))))) = '2';
+				  }
 			  }
 		  }
 		}

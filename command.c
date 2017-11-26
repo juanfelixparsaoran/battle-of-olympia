@@ -157,10 +157,10 @@ void END_TURN(MAP M,Queue *QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT *C
 					}
         }
         else{
-            for (i=1;i<=UnitNbElmt(ListUnitP2);i++){
-            Mov(*Current_UNIT) = M_Mov(*Current_UNIT);
-            Can_Atk(*Current_UNIT)		= true;
-        }
+          for (i=1;i<=UnitNbElmt(ListUnitP2);i++){
+          Mov(*Current_UNIT) = M_Mov(*Current_UNIT);
+          Can_Atk(*Current_UNIT)		= true;
+        	}
 			  }
 				Del(QTURN,&x);
 				Add(QTURN,x);
