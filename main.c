@@ -41,7 +41,6 @@ int main(){
       setStartGame(&M, &P1, &P2);
       printMap(M);
 	  POINT info,recruit,move;
-	  UnitList Enemy_Nearby;
 	  CreateEmpty1(&Qturn,2);
 	  Add(&Qturn,1);
 	  Add(&Qturn,2);
