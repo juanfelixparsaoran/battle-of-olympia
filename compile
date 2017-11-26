@@ -1,0 +1,1 @@
+gcc command.c map.c matriksPetak.c move.c pcolor.c player.c point.c queue.c startingGame.c unit.c unitlist.c villagelist.c villages.c main.c -o main
