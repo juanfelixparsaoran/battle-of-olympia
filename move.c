@@ -52,10 +52,10 @@ void Move(MAP *M , UNIT *U , POINT P, Player *Play){
 	/*Kamus*/
 	/*Algoritma*/
 	if(MovementsRemain(*U)>0){
-			do{
+			while(!IsSquareEmpty(*M,P) || !IsSquareAdjacent(*U,P)){
 				printf("You can't move there, please enter valid coordinate\n");
 				ReadMoveValue(&P);
-			}while(!IsSquareEmpty(*M,P) || !IsSquareAdjacent(*U,P));
+			}
 				ChangeUnitPos(U,P,M,Play);
 				printf("You have succesfully moved to"); TulisPOINT(P); printf("\n");
 

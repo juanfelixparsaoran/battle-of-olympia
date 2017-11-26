@@ -138,13 +138,15 @@ void CHANGE_UNIT (MAP M,Queue QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT
         printf("Please enter the no. Unit: \n");
         scanf("%d",&x);
         select_unit(M,ListUnitP1,Current_unit,x);
+		
     }
     else {
         printf("Unit List of Player 2 :\n");
         Display_unit_list (M, ListUnitP2);
         printf("Please enter the no. Unit: \n");
         scanf("%d",&x);
-        select_unit(M,ListUnitP2,Current_unit,x);
+		
+			
 	}
 }
 
