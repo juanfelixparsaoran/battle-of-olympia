@@ -61,7 +61,7 @@ void setStartGame(MAP *M, Player *P1, Player *P2){
     /* raja ! */
     Unit(*M, Absis(towerSatu), Ordinat(towerSatu)) = Create_new_unit('K', 1, Absis(towerSatu) ,Ordinat(towerSatu));
     Unit(*M, Absis(towerDua), Ordinat(towerDua)) = Create_new_unit('K', 2, Absis(towerDua) ,Ordinat(towerDua));
-    Unit(*M, 5, 1) = Create_new_unit('A', 2, 5 ,1);
+    Unit(*M, 5, 1) = Create_new_unit('S', 2, 5 ,1);
 	POINT P = MakePOINT(5,1);
     units(*P1) = Insert_unit(units(*P1), towerSatu, UnitNbElmt(units(*P1)));
     units(*P2) = Insert_unit(units(*P2), towerDua, UnitNbElmt(units(*P2)));

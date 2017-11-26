@@ -10,13 +10,13 @@ void Display_enemy_nearby(UNIT Current_Unit,MAP M, UnitList P1, UnitList P2,bool
 	POINT P;
 	int i,sum=0;
 	if (Owner(Current_Unit) == 1){
-		for (i=1;i<=UnitNbElmt(P2);i++){
+		for (i=0;i<=UnitNbElmt(P2);i++){
 			P = get_unit_position(P2,i);
 			if (abs(Absis(Pos(Current_Unit)) - Absis(P)) + abs(Ordinat(Pos(Current_Unit)) - Ordinat(P)) == 1){
 				sum += 1;
 				printf("%d. ",sum);
 				show_unit_in_list(Unit(M, Absis(P), Ordinat(P)));
-				*Enemy_Nearby = Insert_unit(*Enemy_Nearby,P,i);	
+				*Enemy_Nearby = Insert_unit(*Enemy_Nearby,P,sum-1);	
 			}
 		}
 		if (sum==0){
@@ -152,18 +152,17 @@ void END_TURN(MAP M,Queue *QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT *C
         int x,i;
         if (InfoHead(*QTURN)==1){
 			for (i=1;i<=UnitNbElmt(ListUnitP1);i++){
-				select_unit(M,ListUnitP1,Current_UNIT,i);
 				Mov(*Current_UNIT) = M_Mov(*Current_UNIT);
 				Can_Atk(*Current_UNIT)		= true;
 			}
         }
         else{
             for (i=1;i<=UnitNbElmt(ListUnitP2);i++){
-            select_unit(M,ListUnitP2,Current_UNIT,i);
             Mov(*Current_UNIT) = M_Mov(*Current_UNIT);
             Can_Atk(*Current_UNIT)		= true;
         }
         Del(QTURN,&x);
+		Add(QTURN,2);
 	}
 }
 
