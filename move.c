@@ -29,44 +29,51 @@ boolean IsSquareEmpty(MAP M , POINT P){
 	return Type(Unit(M,Absis(P), Ordinat(P)))==Nil;
 }
 
-void ChangeUnitPos(UNIT *U , POINT P){
+void ChangeUnitPos(UNIT *U , POINT P, MAP *M, Player *Play){
 /*I.S. Unit siap dipindahkan ke sebuah petak. Dibaca sebuah titik*/
 /*F.S. Unit berpindah ke sebuah petak yang adjacent dengan petak sebelumnya*/
+	Type(Unit(*M, Absis(Pos(*U)), Ordinat(Pos(*U))))= Nil;
 	Absis(Pos(*U))= Absis(P);
 	Ordinat(Pos(*U)) = Ordinat(P);
+	Absis(Info(units(*Play)))=Absis(P);
+	Ordinat(Info(units(*Play)))=Ordinat(P);
+	Type(Unit(*M, Absis(P), Ordinat(P)= Type(*U);
 }
 
 boolean IsSquareAdjacent(UNIT U , POINT P){
 /*I.S. Dibaca sebuah koordinat petak*/
 /*F.S. Sebuah koordinat petak yang adjacent dengan petak posisi unit*/
-	return (Absis(Pos(U))- Absis(P)==0 || Ordinat(Pos(U)) - Ordinat(P)==0) && (abs(Absis(Pos(U)) - Absis(P))==1 || abs(Ordinat(Pos(U))-Ordinat(P))==1);
+	return (abs(Absis(Pos(U)) - Absis(P)) + abs(Ordinat(Pos(U)) - Ordinat(P)) == 1);
 }
 
-void Move(MAP M , UNIT U , POINT P){
+void Move(MAP *M , UNIT *U , POINT P, Player *Play){
 /*I.S. Unit pada sebuah petak, siap untuk berpindah ke petak lain. Unit dapat berpindah ke sebuah petak apabila 
 	   Petak yang akan ditempati masih kosong dan movement pointnya  masih > 0*/
 /*F.S. Dibaca nilai titik perpindahan. Sebuah unit akan berpindah menuju titik yang dituju*/
 	/*Kamus*/
 	boolean move;
-	/*Algoritma*/ 
-	if(MovementsRemain(U)>0){
+	/*Algoritma*/
+	if(MovementsRemain(*U)>0){
 			ReadMoveValue(&P);
-			move = false;
-			while(!move){ /*Kondisi pengulangan apabila masukan koordinat petak salah*/
-			if(IsSquareEmpty(M,P) && IsSquareAdjacent(U,P)){
-				ChangeUnitPos(&U,P);
-				move = true;
+			if(!IsSquareEmpty(*M,P) || !IsSquareAdjacent(*U,P)){
+				do{
+					printf("You can't move there\n");
+					ReadMoveValue(&P);
+					if(IsSquareEmpty(*M,P) && IsSquareAdjacent(*U,P)){
+						ChangeUnitPos(U,P,M,Play);
+						printf("You have succesfully moved to"); TulisPOINT(P);
+						Mov(*U) = MovementsRemain(*U) - 1;
+					}
+				}while(!IsSquareEmpty(*M,P) || !IsSquareAdjacent(*U,P));
 			}else{
-				printf("You can't move there\n");
-				ReadMoveValue(&P);
+				ChangeUnitPos(U,P,M,Play);
+				printf("You have succesfully moved to"); TulisPOINT(P);
+				Mov(*U) = MovementsRemain(*U) - 1;
 			}
-		}
-		Mov(U) = MovementsRemain(U) - 1;
 	}else{
 		printf("You can't move again. Your movement point is not enough\n");
 	}
 }
-
 /******Procedure to create Undo Command*******/
 
 

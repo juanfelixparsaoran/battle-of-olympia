@@ -4,13 +4,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "unitlist.h"
-#include "map.h"
-#include "point.h"
-#include "boolean.h"
-#include "unit.h"
-#include "move.h"
+#include "unitlist.h"
+#include "villagelist.h"
 #include "matriksPetak.h"
-#include "pcolor.h"
+#include "player.h"
+#include "point.h"
+#include "unit.h"
+#include "map.h"
+#include "villages.h"
+#include "startingGame.h"
+#include "command.h"
+#include "move.h"
+#include "math.h"
 
 void ReadMoveValue(POINT *P);
 /*I.S. X dan Y sembarang*/
@@ -28,10 +33,10 @@ boolean IsSquareEmpty(MAP M , POINT P);
 /*I.S. Petak pada map*/
 /*F.S. Sebuah petak sedang tidak ditempati oleh sebuah unit*/
 
-void ChangeUnitPos(UNIT *U , POINT P);
+void ChangeUnitPos(UNIT *U , POINT P, MAP *M, Player *Play);
 
 
-void Move(MAP M , UNIT U , POINT P);
+void Move(MAP *M , UNIT *U , POINT P, Player *Play);
 /*I.S. Unit pada sebuah petak, siap untuk berpindah ke petak lain. Unit dapat berpindah ke sebuah petak apabila 
 	   Petak yang akan ditempati masih kosong dan movement pointnya  masih > 0*/
 /*F.S. Dibaca nilai titik perpindahan. Sebuah unit akan berpindah menuju titik yang dituju*/
