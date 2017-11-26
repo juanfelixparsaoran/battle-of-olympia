@@ -6,9 +6,11 @@
 #include "player.h"
 #include "point.h"
 #include "unit.h"
+#include "map.h"
 #include "villages.h"
 #include "startingGame.h"
-#include "command.c"
+#include "command.h"
+#include <string.h>
 
 #define NEWLINE printf("\n" );
 
@@ -16,6 +18,9 @@ int main(){
 
   int pilihanMenu;
   MAP M;
+  int type;
+  char command[10];
+  POINT recruit;
 
   Player P1 = create_new_player(1);
   Player P2 = create_new_player(2);
@@ -33,6 +38,15 @@ int main(){
       M = Init_map();
       setStartGame(&M, &P1, &P2);
       printMap(M);
+	  Print_Player_Info(P1,M);
+	  input_command(&command);
+	  if (strcmp(command,"attack") == 0){
+		  attack(&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),&M,&units(P1), &units(P2));
+	  }else if (strcmp(command,"recruit") == 0){
+		  BacaPOINT(&recruit);
+		  printf("Pilih yang mau direkruit\n"); scanf("%d",&type);
+		  Recruit(&P1,type, &M, recruit);
+	  }
       break;
     case 2:
       break;

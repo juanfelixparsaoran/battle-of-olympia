@@ -26,7 +26,10 @@ Player create_new_player(int ID){
 	return new_player;
 }
 
-void Print_Info_Player(Player P){
-	printf("Player %d Turn",ID(P));
-	printf("Cash : %d | Income : %d | Upkeep : %d",gold(P),income(P),upkeep(P));
+void Print_Player_Info(Player P,MAP M){
+	printf("Player %d Turn\n",ID(P));
+	printf("Cash : %d | Income : %d | Upkeep : %d\n",gold(P),income(P),upkeep(P));
+	printf("Unit : %c(%d,%d) | ",Type(Unit(M,Absis(Info(units(P))),Ordinat(Info(units(P))))),Absis(Info(units(P))),Ordinat(Info(units(P))));
+	printf("movement point : %d | " , Mov(Unit(M,Absis(Info(units(P))),Ordinat(Info(units(P))))));
+	printf("Can attack : "); if (Can_Atk(Unit(M,Absis(Info(units(P))),Ordinat(Info(units(P)))))){ printf("yes\n");} else printf("no\n");
 }

@@ -71,3 +71,7 @@ void setElement(MAP *M, POINT index, char type,int owner){
   VillageOwner(Village(*M, Absis(index), Ordinat(index))) = owner;
   VillagePos(Village(*M, Absis(index), Ordinat(index))) = index;
 }
+
+void input_command(char *command){
+	printf("Input your command : "); scanf("%s",command);
+}
