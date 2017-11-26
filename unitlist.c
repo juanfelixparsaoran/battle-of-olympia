@@ -62,12 +62,12 @@ UnitList Insert_unit(UnitList L, POINT unit_pos, int indeks)
 }
 
 
-void Delete_unit (UnitList L, int Index)
+void Delete_unit (UnitList *L, int Index)
 /* Delete an element at index X */
 {
 
     address Prec = NULL;
-    address Current = L;
+    address Current = *L;
     int found = 0;
 
     while((Current != NULL) && !found){
@@ -144,5 +144,5 @@ void show_unit_in_list(UNIT U){
     printf("  ");
     TulisPOINT(Pos(U));
     printf(" | ");
-    printf("Health %d", Hp(U));
+    printf("Health %d\n", Hp(U));
 }

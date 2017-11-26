@@ -40,7 +40,8 @@ int main(){
       M = Init_map();
       setStartGame(&M, &P1, &P2);
       printMap(M);
-	  CreateEmpty(&Qturn,2);
+	  UnitList Enemy_Nearby;
+	  CreateEmpty1(&Qturn,2);
 	  Add(&Qturn,1);
 	  Add(&Qturn,2);
 	  while(!UnitList_empty(units(P1)) || !UnitList_empty(units(P2))){

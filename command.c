@@ -3,6 +3,9 @@
 
 #include <math.h>
 
+void CreateEmpty(UnitList *L){
+	*L = NULL;
+}
 void Display_enemy_nearby(UNIT Current_Unit,MAP M, UnitList P1, UnitList P2,boolean *adjacent,UnitList *Enemy_Nearby){
 	POINT P;
 	int i,sum=0;
@@ -13,7 +16,7 @@ void Display_enemy_nearby(UNIT Current_Unit,MAP M, UnitList P1, UnitList P2,bool
 				sum += 1;
 				printf("%d. ",sum);
 				show_unit_in_list(Unit(M, Absis(P), Ordinat(P)));
-				Insert_unit(*Enemy_Nearby,P,i);	
+				*Enemy_Nearby = Insert_unit(*Enemy_Nearby,P,i);	
 			}
 		}
 		if (sum==0){
@@ -28,7 +31,7 @@ void Display_enemy_nearby(UNIT Current_Unit,MAP M, UnitList P1, UnitList P2,bool
 				sum += 1;
 				printf("%d. ",sum);
 				show_unit_in_list(Unit(M, Absis(P), Ordinat(P)));
-				Insert_unit(*Enemy_Nearby,P,i);
+				*Enemy_Nearby= Insert_unit(*Enemy_Nearby,P,i);
 			}
 		}
 		if (sum==0){
@@ -40,32 +43,40 @@ void Display_enemy_nearby(UNIT Current_Unit,MAP M, UnitList P1, UnitList P2,bool
 }
 
 void attack(UNIT *Current_Unit,MAP *M,UnitList *P1, UnitList *P2, boolean *can_attack){
+	boolean adjacent;
+	UnitList Enemy_Nearby;
+	int pilihserang;
 	if(*can_attack){
-		boolean adjacent;
-		UnitList Enemy_Nearby;
-		int pilihserang;
-		Display_enemy_nearby(*Current_Unit,*M,*P1,*P2,&adjacent,&Enemy_Nearby);
-		if (adjacent == false){
-			printf("no enemy nearby\n\n");
-		}else{
-			printf("Pilih musuh yang akan diserang : "); scanf("%d",&pilihserang); /* pilihserang == indeks di enemy_nearby*/
-			address P = Enemy_Nearby;
-			while(P != NULL){
-				if(Index(P) == pilihserang){
-					if(Atk_Type(*Current_Unit) == Atk_Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) || 
-					Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) != 'K'){ /*retaliates*/
-						Hp(*Current_Unit) -= Atk(Unit(*M,Absis(Info(P)),Ordinat(Info(P))));
-						Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) -= Atk(*Current_Unit);
-					}else if((Atk_Type(*Current_Unit) != Atk_Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P))))) && 
-					(Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P))))-Atk(*Current_Unit) == 0)){
-						Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) -= Atk(*Current_Unit);
+			CreateEmpty(&Enemy_Nearby);
+			Display_enemy_nearby(*Current_Unit,*M,*P1,*P2,&adjacent,&Enemy_Nearby);
+			if (adjacent){
+				printf("\nPilih musuh yang akan diserang : \n"); scanf("%d",&pilihserang); /* pilihserang == indeks di enemy_nearby*/
+				address P = Enemy_Nearby;
+				while(P != NULL){
+					if(Index(P) == pilihserang){
+						TulisPOINT(Info(P));
+						if(Atk_Type(*Current_Unit) == Atk_Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) || 
+						Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) != 'K'){ /*retaliates*/
+							Hp(*Current_Unit) -= Atk(Unit(*M,Absis(Info(P)),Ordinat(Info(P))));
+							Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) -= Atk(*Current_Unit);
+						}else if((Atk_Type(*Current_Unit) != Atk_Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P))))) || 
+						(Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P))))-Atk(*Current_Unit) == 0)){
+							Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) -= Atk(*Current_Unit);
+						}
+						if (Hp(*Current_Unit) == 0){
+							Delete_unit(P1,Index(P));
+						}
+						if (Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) == 0){
+							Delete_unit(P2,Index(P));
+						}
+						break;
 					}
-				}else{
 					P = Next(P);
 				}
+				*can_attack = false;
+			}else{
+				printf("no enemy nearby..\n\n");
 			}
-		*can_attack = false;
-		}
 	}else{
 		printf("this unit cant attack in this turn\n\n");
 	}

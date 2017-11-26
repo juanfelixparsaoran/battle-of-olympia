@@ -28,7 +28,7 @@ typedef address UnitList;
 UnitList Insert_unit(UnitList L, POINT unit_pos, int indeks);
 /* Insert a element into list */
 
-void Delete_unit (UnitList L, int Index);
+void Delete_unit (UnitList *L, int Index);
 /* Delete an element at index X */
 
 POINT get_unit_position(UnitList L, int Index);

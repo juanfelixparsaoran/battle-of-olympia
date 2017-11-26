@@ -16,5 +16,5 @@ void Recruit(Player *P,int *type, MAP *M, POINT *Point,UNIT U);
 void CHANGE_UNIT (MAP M,Queue QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT *Current_unit);
 void END_TURN(MAP M,Queue *QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT *Current_UNIT);
 void INFO (MAP M,int i,int j);
-
+void CreateEmpty(UnitList *L);
 #endif

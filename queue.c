@@ -32,7 +32,7 @@ int NBElmt (Queue Q)
 }
 
 /* *** Kreator *** */
-void CreateEmpty (Queue * Q, int Max)
+void CreateEmpty1 (Queue * Q, int Max)
 /* I.S. sembarang */
 /* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
 /* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max+1 */
