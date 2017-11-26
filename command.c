@@ -133,11 +133,11 @@ void CHANGE_UNIT (MAP M,Queue QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT
 void END_TURN(MAP M,Queue *QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT *Current_UNIT){
         int x,i;
         if (InfoHead(*QTURN)==1){
-        for (i=1;i<=UnitNbElmt(ListUnitP1);i++){
-            select_unit(M,ListUnitP1,Current_UNIT,i);
-            Mov(*Current_UNIT) = M_Mov(*Current_UNIT);
-            Can_Atk(*Current_UNIT)		= true;
-        }
+			for (i=1;i<=UnitNbElmt(ListUnitP1);i++){
+				select_unit(M,ListUnitP1,Current_UNIT,i);
+				Mov(*Current_UNIT) = M_Mov(*Current_UNIT);
+				Can_Atk(*Current_UNIT)		= true;
+			}
         }
         else{
             for (i=1;i<=UnitNbElmt(ListUnitP2);i++){
@@ -146,7 +146,6 @@ void END_TURN(MAP M,Queue *QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT *C
             Can_Atk(*Current_UNIT)		= true;
         }
         Del(QTURN,&x);
-        Add(QTURN,x);
 	}
 }
 
