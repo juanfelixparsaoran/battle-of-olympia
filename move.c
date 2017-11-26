@@ -32,8 +32,8 @@ boolean IsSquareEmpty(MAP M , POINT P){
 void ChangeUnitPos(UNIT *U , POINT P, MAP *M, Player *Play){
 /*I.S. Unit siap dipindahkan ke sebuah petak. Dibaca sebuah titik*/
 /*F.S. Unit berpindah ke sebuah petak yang adjacent dengan petak sebelumnya*/
-	Mov(*U) -= 1;
 	Unit(*M, Absis(P), Ordinat(P))= Create_new_unit(Type(*U), ID(*Play), Absis(P) ,Ordinat(P));
+	Mov(Unit(*M, Absis(P), Ordinat(P))) -= 1;
 	Type(Unit(*M, Absis(Pos(*U)), Ordinat(Pos(*U))))= Nil;
 	Absis(Info(units(*Play)))=Absis(P);
 	Ordinat(Info(units(*Play)))=Ordinat(P);
@@ -50,7 +50,6 @@ void Move(MAP *M , UNIT *U , POINT P, Player *Play){
 	   Petak yang akan ditempati masih kosong dan movement pointnya  masih > 0*/
 /*F.S. Dibaca nilai titik perpindahan. Sebuah unit akan berpindah menuju titik yang dituju*/
 	/*Kamus*/
-	boolean move;
 	/*Algoritma*/
 	if(MovementsRemain(*U)>0){
 			if(!IsSquareEmpty(*M,P) || !IsSquareAdjacent(*U,P)){
