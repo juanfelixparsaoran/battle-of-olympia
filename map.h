@@ -14,7 +14,6 @@ typedef MATRIKS MAP;
 #define MapKolEff(M)	(M).NKolEff
 #define MapElmt(M,i,j)	(M).P[(i)][(j)]
 #define Unit(M,i,j) (M).P[(i)][(j)].chr
-#define Move(M,i,j)		(M).P[(i)][(j)].move
 #define Village(M,i,j) (M).P[(i)][(j)].bld
 #define Select(M,i,j)	(M).P[(i)][(j)].select
 

@@ -85,8 +85,14 @@ void Delete_unit (UnitList *L, int Index)
 
     if (found){
 
-        Next(Prec) = Next(Current);
-        free(Current);
+        if (Prec != NULL){
+            Next(Prec) = Next(Current);
+            free(Current);
+        }
+        else{
+            *L = Next(Current);
+            free(Current);
+        }
     }
 }
 

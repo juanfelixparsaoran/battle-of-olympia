@@ -25,7 +25,7 @@ POINT MakePOINT (int X, int Y){
  */
 void BacaPOINT (POINT * P){
 	int x, y;
-	printf("Masukkan koordinat castle yang kosong : "); scanf("%d %d", &x, &y);
+	scanf("%d %d", &x, &y);
 
 	*P = MakePOINT(x,y);
 }

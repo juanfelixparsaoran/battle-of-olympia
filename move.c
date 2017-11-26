@@ -32,12 +32,11 @@ boolean IsSquareEmpty(MAP M , POINT P){
 void ChangeUnitPos(UNIT *U , POINT P, MAP *M, Player *Play){
 /*I.S. Unit siap dipindahkan ke sebuah petak. Dibaca sebuah titik*/
 /*F.S. Unit berpindah ke sebuah petak yang adjacent dengan petak sebelumnya*/
+	Unit(*M, Absis(P), Ordinat(P))= Create_new_unit(Type(*U), ID(*Play), Absis(P) ,Ordinat(P));
+	Mov(*U) -= 1;
 	Type(Unit(*M, Absis(Pos(*U)), Ordinat(Pos(*U))))= Nil;
-	Absis(Pos(*U))= Absis(P);
-	Ordinat(Pos(*U)) = Ordinat(P);
 	Absis(Info(units(*Play)))=Absis(P);
 	Ordinat(Info(units(*Play)))=Ordinat(P);
-	Type(Unit(*M, Absis(P), Ordinat(P)= Type(*U);
 }
 
 boolean IsSquareAdjacent(UNIT U , POINT P){
@@ -54,7 +53,6 @@ void Move(MAP *M , UNIT *U , POINT P, Player *Play){
 	boolean move;
 	/*Algoritma*/
 	if(MovementsRemain(*U)>0){
-			ReadMoveValue(&P);
 			if(!IsSquareEmpty(*M,P) || !IsSquareAdjacent(*U,P)){
 				do{
 					printf("You can't move there\n");
@@ -62,13 +60,12 @@ void Move(MAP *M , UNIT *U , POINT P, Player *Play){
 					if(IsSquareEmpty(*M,P) && IsSquareAdjacent(*U,P)){
 						ChangeUnitPos(U,P,M,Play);
 						printf("You have succesfully moved to"); TulisPOINT(P);
-						Mov(*U) = MovementsRemain(*U) - 1;
 					}
 				}while(!IsSquareEmpty(*M,P) || !IsSquareAdjacent(*U,P));
 			}else{
 				ChangeUnitPos(U,P,M,Play);
 				printf("You have succesfully moved to"); TulisPOINT(P);
-				Mov(*U) = MovementsRemain(*U) - 1;
+
 			}
 	}else{
 		printf("You can't move again. Your movement point is not enough\n");

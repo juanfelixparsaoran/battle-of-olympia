@@ -54,7 +54,6 @@ void attack(UNIT *Current_Unit,MAP *M,UnitList *P1, UnitList *P2, boolean *can_a
 				address P = Enemy_Nearby;
 				while(P != NULL){
 					if(Index(P) == pilihserang){
-						TulisPOINT(Info(P));
 						if(Atk_Type(*Current_Unit) == Atk_Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) || 
 						Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) != 'K'){ /*retaliates*/
 							Hp(*Current_Unit) -= Atk(Unit(*M,Absis(Info(P)),Ordinat(Info(P))));
@@ -64,9 +63,13 @@ void attack(UNIT *Current_Unit,MAP *M,UnitList *P1, UnitList *P2, boolean *can_a
 							Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) -= Atk(*Current_Unit);
 						}
 						if (Hp(*Current_Unit) == 0){
+							printf("Your unit has been killed\n");
+							Type(*Current_Unit) = Nil;
 							Delete_unit(P1,Index(P));
 						}
 						if (Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) == 0){
+							printf("Enemy unit has been killed\n");
+							Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) = Nil;
 							Delete_unit(P2,Index(P));
 						}
 						break;
@@ -87,14 +90,14 @@ void attack(UNIT *Current_Unit,MAP *M,UnitList *P1, UnitList *P2, boolean *can_a
 
 void Recruit(Player *P,int *type, MAP *M, POINT *Point,UNIT U){
 	if (Type(U) == 'K' && VillageType(Village(*M,Absis(Pos(U)),Ordinat(Pos(U)))) == 'T'){
-		BacaPOINT(Point);
+		printf("Masukkan koordinat castle yang kosong : "); BacaPOINT(Point);
 		int x = Absis(*Point);
 		int y = Ordinat(*Point);
 		if ((Type(Unit(*M,x,y)) != Nil) || VillageType(Village(*M,x,y)) != 'C' || VillageOwner(Village(*M,x,y)) != ID(*P)){
 			printf("castle is not empty or it's not your castle or it's not a castle\n\n");
 		}else{
 			printf("List Unit\n");
-			printf("1 Archer 	| Health : 100 | ATK : 15 | DEF : 15 | 1G\n");
+			printf("1 Archer | Health : 100 | ATK : 15 | DEF : 15 | 1G\n");
 			printf("2 Swordsman | Health : 100 | ATK : 20 | DEF : 15 | 2G\n");
 			printf("Pilih yang mau direkruit\n"); scanf("%d",type);
 			int Cost;
@@ -102,6 +105,8 @@ void Recruit(Player *P,int *type, MAP *M, POINT *Point,UNIT U){
 				Cost = 1;
 			}else if(*type ==2){
 				Cost = 2;
+			}else{
+				printf("wrong input");
 			}
 			
 			if (gold(*P) >= Cost){
@@ -111,6 +116,8 @@ void Recruit(Player *P,int *type, MAP *M, POINT *Point,UNIT U){
 				}else if (*type==2){
 					Unit(*M, x, y) = Create_new_unit('S', ID(*P), x ,y);
 					units(*P) = Insert_unit(units(*P), *Point, UnitNbElmt(units(*P)));
+				}else{
+					printf("wrong input");
 				}
 				gold(*P) -= Cost;
 				
@@ -188,7 +195,7 @@ void INFO (MAP M,int i,int j){
     printf("\n");
     printf("== Unit Info ==\n");
     if (Type(Unit(M, i, j)) == Nil){
-        printf("No Unit");
+        printf("No Unit\n");
     }
     else if (Type(Unit(M, i, j)) == 'K'){
         printf("King\n");
@@ -217,6 +224,7 @@ void INFO (MAP M,int i,int j){
           printf("Owned by Player 2\n");
         }
     }
+	
 }
 		
 				

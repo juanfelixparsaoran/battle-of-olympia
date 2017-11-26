@@ -11,6 +11,7 @@
 #include "startingGame.h"
 #include "command.h"
 #include "queue.h"
+#include "move.h"
 #include <string.h>
 
 #define NEWLINE printf("\n" );
@@ -21,7 +22,6 @@ int main(){
   MAP M;
   int type;
   char command[10];
-  POINT recruit;
   Queue Qturn;
 
   Player P1 = create_new_player(1);
@@ -40,6 +40,7 @@ int main(){
       M = Init_map();
       setStartGame(&M, &P1, &P2);
       printMap(M);
+	  POINT info,recruit,move;
 	  UnitList Enemy_Nearby;
 	  CreateEmpty1(&Qturn,2);
 	  Add(&Qturn,1);
@@ -58,6 +59,12 @@ int main(){
 				  CHANGE_UNIT(M,Qturn,units(P1),units(P2),&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))));
 			  }else if(strcmp(command,"end_turn") == 0){
 				  END_TURN(M,&Qturn,units(P1),units(P2),&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))));
+			  }else if(strcmp(command,"info") == 0){
+				  printf("Masukkan koordinat map : "); BacaPOINT(&info);
+				  INFO(M,Absis(info),Ordinat(info));
+			  }else if(strcmp(command,"move") == 0){
+				  BacaPOINT(&move);
+				  Move(&M ,&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),move,&P1);
 			  }
 		  }else{
 			  Print_Player_Info(P2,M);
@@ -72,6 +79,11 @@ int main(){
 				  CHANGE_UNIT(M,Qturn,units(P1),units(P2),&Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2)))));
 			  }else if(strcmp(command,"end_turn") == 0){
 				  END_TURN(M,&Qturn,units(P1),units(P2),&Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2)))));
+			  }else if(strcmp(command,"info") == 0){
+				  printf("Masukkan koordinat map : "); BacaPOINT(&info);
+				  INFO(M,Absis(info),Ordinat(info));
+			  }else if(strcmp(command,"move") == 0){
+				  Move(&M , &Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2)))) ,move, &P2);
 			  }
 		  }
 		}
