@@ -25,3 +25,8 @@ Player create_new_player(int ID){
 	InitializeNewPlayer(&new_player, ID);
 	return new_player;
 }
+
+void Print_Info_Player(Player P){
+	printf("Player %d Turn",ID(P));
+	printf("Cash : %d | Income : %d | Upkeep : %d",gold(P),income(P),upkeep(P));
+}
