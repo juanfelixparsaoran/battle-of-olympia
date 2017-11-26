@@ -162,7 +162,7 @@ void END_TURN(MAP M,Queue *QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT *C
             Can_Atk(*Current_UNIT)		= true;
         }
         Del(QTURN,&x);
-		Add(QTURN,2);
+		Add(QTURN,x);
 	}
 }
 
