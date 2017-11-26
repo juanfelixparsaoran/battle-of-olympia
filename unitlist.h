@@ -33,7 +33,7 @@ void Delete_unit (UnitList *L, int Index);
 
 POINT get_unit_position(UnitList L, int Index);
 
-void select_unit(MAP Map, UnitList Unit_list, UNIT * Current_unit, int Index);
+void select_unit(MAP *Map, UnitList *Unit_list, UNIT * Current_unit, int Index);
 /****************** DISPLAY ******************/
 void Display_unit_list (MAP M, UnitList L);
 /* Display unit index and unit position */

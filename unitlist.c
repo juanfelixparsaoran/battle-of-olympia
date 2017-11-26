@@ -113,20 +113,34 @@ POINT get_unit_position(UnitList L, int Index){
 }
 
 
-void select_unit(MAP Map, UnitList Unit_list, UNIT * Current_unit, int Index){
+void select_unit(MAP *Map, UnitList *Unit_list, UNIT * Current_unit, int Index){
 
-    POINT unit_pos = get_unit_position(Unit_list, Index);
+    POINT unit_pos = get_unit_position(*Unit_list, Index);
     int i = Absis(unit_pos);
     int j = Ordinat(unit_pos);
 
-    if ( (i >= 0) && (i <= MapBrsEff(Map)) && (j >= 0) && (j <= MapKolEff(Map))){
-        *Current_unit = Unit(Map,i,j);
+    if ( (i >= 0) && (i <= MapBrsEff(*Map)) && (j >= 0) && (j <= MapKolEff(*Map))){
+        *Current_unit = Unit(*Map,i,j);
+		*Unit_list = Insert_unit(*Unit_list, unit_pos, UnitNbElmt(*Unit_list));
     }
     else{
         printf("You don't have such unit...\n");
     }
 }
 
+address SearchAddress(UnitList L, int indeks){
+	address P = L;
+	while (P!=NULL){
+		if (Index(P) == indeks){
+			return P;
+			break;
+		}else{
+			P = Next(P);
+		}
+	}
+}
+		
+		
 
 /****************** DISPLAY ******************/
 void Display_unit_list (MAP M, UnitList L)
