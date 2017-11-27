@@ -16,6 +16,16 @@
 
 #define NEWLINE printf("\n" );
 
+void Print_Player_Info(Player P,MAP M){
+	printf("Player %d Turn\n",ID(P));
+	printf("Cash : %d | Income : %d | Upkeep : %d\n",gold(P),income(P),upkeep(P));
+	printf("Unit : %c(%d,%d) | ",Type(Unit(M,Absis(Info(units(P))),Ordinat(Info(units(P))))),Absis(Info(units(P))),Ordinat(Info(units(P))));
+	printf("movement point : %d | " , Mov(Unit(M,Absis(Info(units(P))),Ordinat(Info(units(P))))));
+	printf("Can attack : "); if (Can_Atk(Unit(M,Absis(Info(units(P))),Ordinat(Info(units(P)))))){ printf("yes\n");} else printf("no\n");
+void input_command(char *command){
+	printf("Input your command : "); scanf("%s",command); printf("\n");
+}
+
 int main(){
 
   int pilihanMenu;
@@ -54,7 +64,7 @@ int main(){
 		  RajaP2 = get_unit_position(units(P2),1);
 		  while(Hp(Unit(M,Absis(RajaP1),Ordinat(RajaP1))) > 0 && Hp(Unit(M,Absis(RajaP1),Ordinat(RajaP1))) > 0){
 			  if(InfoHead(Qturn)==1){
-				  Print_Player_Info(P1,M,Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))));
+				  Print_Player_Info(P1,M);
 				  input_command(&command);
 				  if (strcmp(command,"attack") == 0){
 					  attack(&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),&M,&units(P1), &units(P2),&Can_Atk(Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1))))));
@@ -88,7 +98,7 @@ int main(){
 					  printf("Wrong Command!!\n\n");
 				  }
 			  }else{
-				  Print_Player_Info(P2,M,Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2)))));
+				  Print_Player_Info(P2,M);
 				  input_command(&command);
 				  if (strcmp(command,"attack") == 0){
 					  attack(&Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2)))),&M,&units(P1), &units(P2),&Can_Atk(Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2))))));
