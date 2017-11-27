@@ -72,6 +72,7 @@ int main(){
 					  if(VillageType(Village(M,Absis(Info(units(P1))),Ordinat(Info(units(P1))))) == 'V'){
 						  printf("You captured a village");
 						  VillageOwner(Village(M,Absis(Info(units(P1))),Ordinat(Info(units(P1))))) = '1';
+						  income(P1) += 3;
 					  }
 				  }else if(strcmp(command,"exit") == 0){
 					  printf("Thanks for playing this game...\n");
@@ -102,14 +103,17 @@ int main(){
 					  if(VillageType(Village(M,Absis(Info(units(P2))),Ordinat(Info(units(P2))))) == 'V'){
 						  printf("You captured a village\n");
 						  VillageOwner(Village(M,Absis(Info(units(P2))),Ordinat(Info(units(P2))))) = '2';
+						  income(P2) += 3;
 					  }
 				  }
 			  }
+			  RajaP1 = get_unit_position(units(P1),1);
+			  RajaP2 = get_unit_position(units(P2),1);
 		  }
 		  if(Hp(Unit(M,Absis(RajaP1),Ordinat(RajaP1)))<=0){
-			printf("Player 1 Win, Congrats!!\n");
+			printf("Player 2 Win, Congrats!!\n");
 		  }else{
-	    	printf("Player 2 Win, Congrats!!\n");
+	    	printf("Player 1 Win, Congrats!!\n");
 		  }
 	}else if (pilihanMenu==2){
 			printf("Thanks for playing this game...\n");

@@ -58,10 +58,14 @@ void attack(UNIT *Current_Unit,MAP *M,UnitList *P1, UnitList *P2, boolean *can_a
 						Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) != 'K'){ /*retaliates*/
 							Hp(*Current_Unit) -= Atk(Unit(*M,Absis(Info(P)),Ordinat(Info(P))));
 							Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) -= Atk(*Current_Unit);
+							printf("enemy unit take %d damage\n",Atk(*Current_Unit));
+							printf("your unit take %d damage\n",Atk(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))));
 						}else if((Atk_Type(*Current_Unit) != Atk_Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P))))) ||
 						(Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P))))-Atk(*Current_Unit) == 0)){
 							Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) -= Atk(*Current_Unit);
+							printf("enemy unit take %d damage\n",Atk(*Current_Unit));
 						}
+						
 						if (Hp(*Current_Unit) == 0){
 							printf("Your unit has been killed\n");
 							Type(*Current_Unit) = Nil;
@@ -120,6 +124,7 @@ void Recruit(Player *P,int *type, MAP *M, POINT *Point,UNIT U){
 					printf("wrong input");
 				}
 				gold(*P) -= Cost;
+				upkeep(*P) += Cost;
 
 			}else{
 				printf("Not enough money :(..\n\n");
@@ -138,7 +143,6 @@ void CHANGE_UNIT (MAP M,Queue QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT
         printf("Please enter the no. Unit: \n");
         scanf("%d",&x);
         select_unit(&M,&ListUnitP1,Current_unit,x);
-		
     }
     else {
         printf("Unit List of Player 2 :\n");
@@ -253,15 +257,13 @@ boolean IsSquareEmpty(MAP M , POINT P){
 	return Type(Unit(M,Absis(P), Ordinat(P)))==Nil;
 }
 
-void ChangeUnitPos(UNIT *U , POINT P, MAP *M, Player *Play){
+void ChangeUnitPos(UNIT *U ,POINT P, MAP *M, Player *Play){
 /*I.S. Unit siap dipindahkan ke sebuah petak. Dibaca sebuah titik*/
 /*F.S. Unit berpindah ke sebuah petak yang adjacent dengan petak sebelumnya*/
 	Unit(*M, Absis(P), Ordinat(P))= Create_new_unit(Type(*U), ID(*Play), Absis(P) ,Ordinat(P));
-	Mov(Unit(*M, Absis(P), Ordinat(P))) -= 1;
 	Type(Unit(*M, Absis(Pos(*U)), Ordinat(Pos(*U))))= Nil;
 	Absis(Info(units(*Play)))=Absis(P);
 	Ordinat(Info(units(*Play)))=Ordinat(P);
-	
 }
 
 boolean IsSquareAdjacent(UNIT U , POINT P){
@@ -282,6 +284,8 @@ void Move(MAP *M , UNIT *U , POINT P, Player *Play){
 				ReadMoveValue(&P);
 			}
 				ChangeUnitPos(U,P,M,Play);
+				Mov(Unit(*M,Absis(Info(units(*Play))), Ordinat(Info(units(*Play))))) -= 1;
+				Mov(*U) -= 1;
 				printf("You have succesfully moved to"); TulisPOINT(P); printf("\n");
 
 	}else{
