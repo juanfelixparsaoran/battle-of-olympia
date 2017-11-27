@@ -16,16 +16,6 @@
 
 #define NEWLINE printf("\n" );
 
-void Print_Player_Info(Player P,MAP M){
-	printf("Player %d Turn\n",ID(P));
-	printf("Cash : %d | Income : %d | Upkeep : %d\n",gold(P),income(P),upkeep(P));
-	printf("Unit : %c(%d,%d) | ",Type(Unit(M,Absis(Info(units(P))),Ordinat(Info(units(P))))),Absis(Info(units(P))),Ordinat(Info(units(P))));
-	printf("movement point : %d | " , Mov(Unit(M,Absis(Info(units(P))),Ordinat(Info(units(P))))));
-	printf("Can attack : "); if (Can_Atk(Unit(M,Absis(Info(units(P))),Ordinat(Info(units(P)))))){ printf("yes\n");} else printf("no\n");
-void input_command(char *command){
-	printf("Input your command : "); scanf("%s",command); printf("\n");
-}
-
 int main(){
 
   int pilihanMenu;
