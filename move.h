@@ -16,6 +16,7 @@
 #include "command.h"
 #include "move.h"
 #include "math.h"
+#include "stacklist.h"
 
 void ReadMoveValue(POINT *P);
 /*I.S. X dan Y sembarang*/
@@ -36,7 +37,7 @@ boolean IsSquareEmpty(MAP M , POINT P);
 void ChangeUnitPos(UNIT *U , POINT P, MAP *M, Player *Play);
 
 
-void Move(MAP *M , UNIT *U , POINT P, Player *Play);
+void Move(MAP *M , UNIT *U , POINT P, Player *Play,Stack *S);
 /*I.S. Unit pada sebuah petak, siap untuk berpindah ke petak lain. Unit dapat berpindah ke sebuah petak apabila 
 	   Petak yang akan ditempati masih kosong dan movement pointnya  masih > 0*/
 /*F.S. Dibaca nilai titik perpindahan. Sebuah unit akan berpindah menuju titik yang dituju*/
@@ -44,4 +45,8 @@ void Move(MAP *M , UNIT *U , POINT P, Player *Play);
 boolean IsSquareAdjacent(UNIT U , POINT P);
 /*I.S. Dibaca sebuah koordinat petak*/
 /*F.S. Sebuah koordinat petak yang adjacent dengan petak posisi unit*/
+
+void ChangeUnitPosUndo(UNIT *U , POINT P, MAP *M, Player *Play);
+
+void Undo(POINT *P,UNIT *U , Stack *S, MAP *M, Player *Play);
 #endif
