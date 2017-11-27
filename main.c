@@ -12,6 +12,7 @@
 #include "command.h"
 #include "queue.h"
 #include "move.h"
+#include "stacklist.h"
 #include <string.h>
 
 #define NEWLINE printf("\n" );
@@ -23,6 +24,8 @@ int main(){
   int type;
   char command[10];
   Queue Qturn;
+  Stack S;
+  CreateEmpty2(&S);
 
   Player P1 = create_new_player(1);
   Player P2 = create_new_player(2);
@@ -68,12 +71,14 @@ int main(){
 					  INFO(M,Absis(info),Ordinat(info));
 				  }else if(strcmp(command,"move") == 0){
 					  printf("Masukkan koordinat tujuan : "); BacaPOINT(&move);
-					  Move(&M ,&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),move,&P1);
+					  Move(&M ,&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),move,&P1,&S);
 					  if(VillageType(Village(M,Absis(Info(units(P1))),Ordinat(Info(units(P1))))) == 'V'){
 						  printf("You captured a village");
 						  VillageOwner(Village(M,Absis(Info(units(P1))),Ordinat(Info(units(P1))))) = '1';
 						  income(P1) += 3;
 					  }
+				  }else if(strcmp(command,"undo") == 0){
+					  Undo(&Info(units(P1)),&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),&S,&M,&P1);
 				  }else if(strcmp(command,"exit") == 0){
 					  printf("Thanks for playing this game...\n");
 					  sleep(4);
@@ -99,7 +104,7 @@ int main(){
 					  INFO(M,Absis(info),Ordinat(info));
 				  }else if(strcmp(command,"move") == 0){
 					  printf("Masukkan koordinat tujuan : ");  BacaPOINT(&move);
-					  Move(&M , &Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2)))) ,move, &P2);
+					  Move(&M , &Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2)))) ,move, &P2,&S);
 					  if(VillageType(Village(M,Absis(Info(units(P2))),Ordinat(Info(units(P2))))) == 'V'){
 						  printf("You captured a village\n");
 						  VillageOwner(Village(M,Absis(Info(units(P2))),Ordinat(Info(units(P2))))) = '2';

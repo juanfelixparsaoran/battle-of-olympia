@@ -1,7 +1,9 @@
 
 #include "command.h"
-
+#include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
+
 
 void CreateEmpty(UnitList *L){
 	*L = NULL;
@@ -124,7 +126,7 @@ void Recruit(Player *P,int *type, MAP *M, POINT *Point,UNIT U){
 					printf("wrong input");
 				}
 				gold(*P) -= Cost;
-				upkeep(*P) += Cost;
+				upkeep(*P) += Cost; 
 
 			}else{
 				printf("Not enough money :(..\n\n");
@@ -272,24 +274,35 @@ boolean IsSquareAdjacent(UNIT U , POINT P){
 	return (abs(Absis(Pos(U)) - Absis(P)) + abs(Ordinat(Pos(U)) - Ordinat(P)) == 1);
 }
 
-void Move(MAP *M , UNIT *U , POINT P, Player *Play){
+void Move(MAP *M , UNIT *U , POINT P, Player *Play, Stack *S){
 /*I.S. Unit pada sebuah petak, siap untuk berpindah ke petak lain. Unit dapat berpindah ke sebuah petak apabila 
 	   Petak yang akan ditempati masih kosong dan movement pointnya  masih > 0*/
 /*F.S. Dibaca nilai titik perpindahan. Sebuah unit akan berpindah menuju titik yang dituju*/
-	/*Kamus*/
 	/*Algoritma*/
 	if(MovementsRemain(*U)>0){
 			while(!IsSquareEmpty(*M,P) || !IsSquareAdjacent(*U,P)){
 				printf("You can't move there, please enter valid coordinate\n");
 				ReadMoveValue(&P);
 			}
-				ChangeUnitPos(U,P,M,Play);
-				Mov(Unit(*M,Absis(Info(units(*Play))), Ordinat(Info(units(*Play))))) -= 1;
-				Mov(*U) -= 1;
-				printf("You have succesfully moved to"); TulisPOINT(P); printf("\n");
-
+			Push(S,P);
+			ChangeUnitPos(U,P,M,Play);
+			Mov(Unit(*M,Absis(Info(units(*Play))), Ordinat(Info(units(*Play))))) -= 1;
+			Mov(*U) -= 1;
+			printf("You have succesfully moved to");printf(" "); TulisPOINT(P); printf("\n");
 	}else{
 		printf("You can't move again. Your movement point is not enough\n");
 	}
 }
+
+/******Procedure to create Undo Command*******/
+void Undo(POINT *P,UNIT *U , Stack *S, MAP *M, Player *Play){
+	if (IsEmpty2(*S)){
+		printf("You can't undo. You haven't move yet\n");
+	}else{
+	Pop(S,P);
+	ChangeUnitPos(U,*P,M,Play);
+	Mov(Unit(*M, Absis(*P), Ordinat(*P))) += 1;
+	}	
+}
+
 /******Procedure to create Undo Command*******/

@@ -8,6 +8,9 @@
 #include "boolean.h"
 #include "player.h"
 #include "queue.h"
+#include "stacklist.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 
 void Display_enemy_nearby(UNIT Current_Unit,MAP M, UnitList P1, UnitList P2,boolean *adjacent,UnitList *Enemy_Nearby);
@@ -18,6 +21,7 @@ void END_TURN(MAP M,Queue *QTURN,UnitList ListUnitP1,UnitList ListUnitP2,UNIT *C
 void INFO (MAP M,int i,int j);
 void CreateEmpty(UnitList *L);
 void ReadMoveValue(POINT *P);
+void Undo(POINT *P,UNIT *U , Stack *S, MAP *M, Player *Play);
 /*I.S. X dan Y sembarang*/
 /*F.S. X dan Y adalah nilai perpindahan unit ke petak yang adjacent dengan petak sebelumnya*/
 
@@ -36,7 +40,7 @@ boolean IsSquareEmpty(MAP M , POINT P);
 void ChangeUnitPos(UNIT *U , POINT P, MAP *M, Player *Play);
 
 
-void Move(MAP *M , UNIT *U , POINT P, Player *Play);
+void Move(MAP *M , UNIT *U , POINT P, Player *Play,Stack *S);
 /*I.S. Unit pada sebuah petak, siap untuk berpindah ke petak lain. Unit dapat berpindah ke sebuah petak apabila 
 	   Petak yang akan ditempati masih kosong dan movement pointnya  masih > 0*/
 /*F.S. Dibaca nilai titik perpindahan. Sebuah unit akan berpindah menuju titik yang dituju*/
