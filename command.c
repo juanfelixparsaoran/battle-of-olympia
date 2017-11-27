@@ -56,24 +56,26 @@ void attack(UNIT *Current_Unit,MAP *M,UnitList *P1, UnitList *P2, boolean *can_a
 				address P = Enemy_Nearby;
 				while(P != NULL){
 					if(Index(P) == pilihserang){
-						if(Atk_Type(*Current_Unit) == Atk_Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) ||
-						Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) != 'K'){ /*retaliates*/
-							Hp(*Current_Unit) -= Atk(Unit(*M,Absis(Info(P)),Ordinat(Info(P))));
-							Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) -= Atk(*Current_Unit);
-							printf("enemy unit take %d damage\n",Atk(*Current_Unit));
-							printf("your unit take %d damage\n",Atk(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))));
+						if((Atk_Type(*Current_Unit) == Atk_Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) ||
+						Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) != 'K') && (Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P))))-Atk(*Current_Unit) > 0)){ /*retaliates*/
+						
+								Hp(*Current_Unit) -= Atk(Unit(*M,Absis(Info(P)),Ordinat(Info(P))));
+								Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) -= Atk(*Current_Unit);
+								printf("enemy unit take %d damage\n",Atk(*Current_Unit));
+								printf("your unit take %d damage\n",Atk(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))));
+						
 						}else if((Atk_Type(*Current_Unit) != Atk_Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P))))) ||
 						(Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P))))-Atk(*Current_Unit) == 0)){
 							Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) -= Atk(*Current_Unit);
 							printf("enemy unit take %d damage\n",Atk(*Current_Unit));
 						}
 						
-						if (Hp(*Current_Unit) == 0){
+						if (Hp(*Current_Unit) <= 0){
 							printf("Your unit has been killed\n");
 							Type(*Current_Unit) = Nil;
 							Delete_unit(P1,Index(P));
 						}
-						if (Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) == 0){
+						if (Hp(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) <= 0){
 							printf("Enemy unit has been killed\n");
 							Type(Unit(*M,Absis(Info(P)),Ordinat(Info(P)))) = Nil;
 							Delete_unit(P2,Index(P));

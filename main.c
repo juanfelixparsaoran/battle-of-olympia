@@ -126,8 +126,8 @@ int main(){
 		  }
 	}else if (pilihanMenu==2){
 			printf("Thanks for playing this game...\n");
-					  sleep(4);
-					  exit(0);
+			sleep(4);
+			exit(0);
 	}
 
   return 0;
