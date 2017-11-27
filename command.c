@@ -274,20 +274,19 @@ boolean IsSquareAdjacent(UNIT U , POINT P){
 	return (abs(Absis(Pos(U)) - Absis(P)) + abs(Ordinat(Pos(U)) - Ordinat(P)) == 1);
 }
 
-void Move(MAP *M , UNIT *U , POINT P, Player *Play, Stack *S){
+void Move(MAP *M , UNIT *U , POINT P, Player *Play){
 /*I.S. Unit pada sebuah petak, siap untuk berpindah ke petak lain. Unit dapat berpindah ke sebuah petak apabila 
 	   Petak yang akan ditempati masih kosong dan movement pointnya  masih > 0*/
 /*F.S. Dibaca nilai titik perpindahan. Sebuah unit akan berpindah menuju titik yang dituju*/
 	/*Algoritma*/
-	if(MovementsRemain(*U)>0){
+	if(MovementsRemain(Unit(*M,Absis(Info(units(*Play))), Ordinat(Info(units(*Play))))) > 0){
+			ReadMoveValue(&P);
 			while(!IsSquareEmpty(*M,P) || !IsSquareAdjacent(*U,P)){
 				printf("You can't move there, please enter valid coordinate\n");
 				ReadMoveValue(&P);
 			}
-			Push(S,P);
 			ChangeUnitPos(U,P,M,Play);
 			Mov(Unit(*M,Absis(Info(units(*Play))), Ordinat(Info(units(*Play))))) -= 1;
-			Mov(*U) -= 1;
 			printf("You have succesfully moved to");printf(" "); TulisPOINT(P); printf("\n");
 	}else{
 		printf("You can't move again. Your movement point is not enough\n");
@@ -300,8 +299,8 @@ void Undo(POINT *P,UNIT *U , Stack *S, MAP *M, Player *Play){
 		printf("You can't undo. You haven't move yet\n");
 	}else{
 	Pop(S,P);
+	TulisPOINT(*P);
 	ChangeUnitPos(U,*P,M,Play);
-	Mov(Unit(*M, Absis(*P), Ordinat(*P))) += 1;
 	}	
 }
 

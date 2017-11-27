@@ -11,7 +11,6 @@
 #include "startingGame.h"
 #include "command.h"
 #include "queue.h"
-#include "move.h"
 #include "stacklist.h"
 #include <string.h>
 
@@ -24,8 +23,9 @@ int main(){
   int type;
   char command[10];
   Queue Qturn;
-  Stack S;
+  Stack S,S2;
   CreateEmpty2(&S);
+  CreateEmpty2(&S2);
 
   Player P1 = create_new_player(1);
   Player P2 = create_new_player(2);
@@ -45,7 +45,7 @@ int main(){
 		  M = Init_map();
 		  setStartGame(&M, &P1, &P2);
 		  printMap(M);
-		  POINT info,recruit,move,RajaP1,RajaP2;
+		  POINT info,recruit,move,RajaP1,RajaP2,undo;
 		  CreateEmpty1(&Qturn,2);
 		  Add(&Qturn,1);
 		  Add(&Qturn,2);
@@ -54,7 +54,7 @@ int main(){
 		  RajaP2 = get_unit_position(units(P2),1);
 		  while(Hp(Unit(M,Absis(RajaP1),Ordinat(RajaP1))) > 0 && Hp(Unit(M,Absis(RajaP1),Ordinat(RajaP1))) > 0){
 			  if(InfoHead(Qturn)==1){
-				  Print_Player_Info(P1,M);
+				  Print_Player_Info(P1,M,Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))));
 				  input_command(&command);
 				  if (strcmp(command,"attack") == 0){
 					  attack(&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),&M,&units(P1), &units(P2),&Can_Atk(Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1))))));
@@ -70,15 +70,16 @@ int main(){
 					  printf("Masukkan koordinat map : "); BacaPOINT(&info);
 					  INFO(M,Absis(info),Ordinat(info));
 				  }else if(strcmp(command,"move") == 0){
-					  printf("Masukkan koordinat tujuan : "); BacaPOINT(&move);
-					  Move(&M ,&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),move,&P1,&S);
+					  Push(&S,MakePOINT(Absis(Info(units(P1))),Ordinat(Info(units(P1)))));
+					  printf("Masukkan koordinat tujuan : ");
+					  Move(&M ,&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),move,&P1);
 					  if(VillageType(Village(M,Absis(Info(units(P1))),Ordinat(Info(units(P1))))) == 'V'){
 						  printf("You captured a village");
 						  VillageOwner(Village(M,Absis(Info(units(P1))),Ordinat(Info(units(P1))))) = '1';
 						  income(P1) += 3;
 					  }
 				  }else if(strcmp(command,"undo") == 0){
-					  Undo(&Info(units(P1)),&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),&S,&M,&P1);
+					  Undo(&undo,&Unit(M,Absis(Info(units(P1))),Ordinat(Info(units(P1)))),&S,&M,&P1);
 				  }else if(strcmp(command,"exit") == 0){
 					  printf("Thanks for playing this game...\n");
 					  sleep(4);
@@ -87,7 +88,7 @@ int main(){
 					  printf("Wrong Command!!\n\n");
 				  }
 			  }else{
-				  Print_Player_Info(P2,M);
+				  Print_Player_Info(P2,M,Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2)))));
 				  input_command(&command);
 				  if (strcmp(command,"attack") == 0){
 					  attack(&Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2)))),&M,&units(P1), &units(P2),&Can_Atk(Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2))))));
@@ -103,13 +104,16 @@ int main(){
 					  printf("Masukkan koordinat map : "); BacaPOINT(&info);
 					  INFO(M,Absis(info),Ordinat(info));
 				  }else if(strcmp(command,"move") == 0){
-					  printf("Masukkan koordinat tujuan : ");  BacaPOINT(&move);
-					  Move(&M , &Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2)))) ,move, &P2,&S);
+					  Push(&S2,MakePOINT(Absis(Info(units(P2))),Ordinat(Info(units(P2)))));
+					  printf("Masukkan koordinat tujuan : "); 
+					  Move(&M ,&Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2)))) ,move, &P2);
 					  if(VillageType(Village(M,Absis(Info(units(P2))),Ordinat(Info(units(P2))))) == 'V'){
 						  printf("You captured a village\n");
 						  VillageOwner(Village(M,Absis(Info(units(P2))),Ordinat(Info(units(P2))))) = '2';
 						  income(P2) += 3;
 					  }
+				  }else if(strcmp(command,"undo") == 0){
+					  Undo(&undo,&Unit(M,Absis(Info(units(P2))),Ordinat(Info(units(P2)))),&S2,&M,&P2);
 				  }
 			  }
 			  RajaP1 = get_unit_position(units(P1),1);

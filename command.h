@@ -40,7 +40,7 @@ boolean IsSquareEmpty(MAP M , POINT P);
 void ChangeUnitPos(UNIT *U , POINT P, MAP *M, Player *Play);
 
 
-void Move(MAP *M , UNIT *U , POINT P, Player *Play,Stack *S);
+void Move(MAP *M , UNIT *U , POINT P, Player *Play);
 /*I.S. Unit pada sebuah petak, siap untuk berpindah ke petak lain. Unit dapat berpindah ke sebuah petak apabila 
 	   Petak yang akan ditempati masih kosong dan movement pointnya  masih > 0*/
 /*F.S. Dibaca nilai titik perpindahan. Sebuah unit akan berpindah menuju titik yang dituju*/
